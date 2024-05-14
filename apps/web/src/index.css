@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Danfo";
+  src: url("/fonts/Danfo.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  @apply m-0 p-2 min-h-screen w-screen;
+}
+h1 {
+  font-family: "Danfo", sans-serif;
+  @apply text-6xl text-center;
+}
