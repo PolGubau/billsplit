@@ -15,7 +15,7 @@ const AmountBar = ({ paid, avg }: AmountBarProps) => {
   const positiveWidth = hasPaidMore ? paidWidth : 0; // the width of the green line.
   const negativeWidth = hasPaidLess ? paidWidth : 0; // the width of the red line.
 
-  const moneyToReceive = parseFloat((paid - avg).toString()).toFixed(2);
+  const moneyToReceive = paid - avg;
 
   return (
     <ul className="grid grid-cols-2 w-full justify-center items-center">

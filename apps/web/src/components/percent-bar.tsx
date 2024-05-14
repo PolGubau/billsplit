@@ -3,12 +3,12 @@ import { cn } from "pol-ui";
 interface PercentBarProps {
   width: number;
   negative?: boolean;
-  moneyToReceive?: string
+  moneyToReceive?: number;
 }
 const PercentBar = ({
   width,
   negative = false,
-  moneyToReceive,
+  moneyToReceive = 0,
 }: PercentBarProps) => {
   const commonClasses = "flex w-full h-full relative";
 
@@ -26,7 +26,7 @@ const PercentBar = ({
       >
         {Boolean(moneyToReceive) && (
           <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            {moneyToReceive}€
+            {moneyToReceive / 100}€
           </span>
         )}
       </div>
