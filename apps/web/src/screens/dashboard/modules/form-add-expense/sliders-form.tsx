@@ -1,7 +1,8 @@
 import { Alert, Input, RangeSlider } from "pol-ui";
 import { useEffect, useMemo } from "react";
-import { User } from "../../App";
 import { Amount, getAmountsPerUser, truncateNumber } from "./helpers";
+import { User } from "../../../../types/base";
+import { toEuro } from "../../../../utils/parsers";
 
 export interface SliderFormProps {
   users: User[];
@@ -17,7 +18,7 @@ const SlidersForm = ({
 }: SliderFormProps) => {
   useEffect(() => {
     setAmountsPerUser(getAmountsPerUser(users, amountToReach));
-  }, [users, amountToReach]);
+  }, [amountToReach]);
 
   const sumAmounts = useMemo(() => {
     const amount = amountsPerUser.reduce(
@@ -71,14 +72,15 @@ const SlidersForm = ({
       })}
       <div>
         <p className="text-sm flex flex-col gap-1 ">
-          <span className="">Total: {sumAmounts / 100}€</span>
-          <span className="">You need to reach {amountToReach / 100}€</span>
+          <span className="">Total: {toEuro(sumAmounts)}€</span>
 
           {Boolean(amountToReach) && sumAmounts != amountToReach && (
             <Alert color="warning">
               {/* some cents are lost in the way, show a warning  */}
               You are
-              {sumAmounts > amountToReach ? " exceeding" : " not reaching"} the
+              {sumAmounts > amountToReach
+                ? " exceeding"
+                : " not reaching"} by {` `}
               {Math.abs((amountToReach - sumAmounts) / 100)}€
             </Alert>
           )}

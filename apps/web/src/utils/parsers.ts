@@ -5,3 +5,5 @@ export const roundNumber = (number: number, decimals: number = 2) => {
 
   return rounded;
 };
+
+export const toEuro = (cents: number) => cents / 100;

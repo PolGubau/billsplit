@@ -1,4 +1,4 @@
-import { User } from "../../App";
+import { User } from "../../../../types/base";
 
 export const truncateNumber = (number: string | number) =>
   Number(number.toString().split(".")[0]);

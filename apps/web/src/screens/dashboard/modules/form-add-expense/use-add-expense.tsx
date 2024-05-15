@@ -1,15 +1,12 @@
-import { Button, Input, Select } from "pol-ui";
 import { FormEvent, useState } from "react";
-import { User } from "../../App";
-import SlidersForm from "./sliders-form";
 import { Amount, getAmountsPerUser } from "./helpers";
+import { User } from "../../../../types/base";
 
-interface AddFormProps {
+interface useAddExpenseProps {
   users: User[];
   setUsers: (users: User[]) => void;
 }
-
-const AddForm = ({ users, setUsers }: AddFormProps) => {
+export const useAddExpense = ({ users, setUsers }: useAddExpenseProps) => {
   const [amount, setAmount] = useState(0);
 
   const [amountsPerUser, setAmountsPerUser] = useState<Amount[]>(
@@ -21,7 +18,6 @@ const AddForm = ({ users, setUsers }: AddFormProps) => {
     e.preventDefault();
     const formData = new FormData(form);
     const name = formData.get("name") as string; // quien ha pagado
-    const amount = parseFloat(formData.get("amount") as string); // la cuenta de la cena
 
     // amountsPerUser // lo que han gastado de verdad cada uno
 
@@ -40,7 +36,6 @@ const AddForm = ({ users, setUsers }: AddFormProps) => {
             paid: user.name === name ? user.paid + amount.amount : user.paid,
           };
         }
-
         return user;
       });
 
@@ -50,37 +45,7 @@ const AddForm = ({ users, setUsers }: AddFormProps) => {
     }
 
     form.reset();
+    setAmount(0);
   };
-
-  return (
-    <div className="flex flex-col gap-2">
-      <h2 className="text-2xl text-center">Add new expense</h2>
-      <form className="flex gap-4 flex-col" onSubmit={addPayment}>
-        <Select name="name" id="name">
-          {users.map((user, index) => (
-            <option key={index} value={user.name}>
-              {user.name}
-            </option>
-          ))}
-        </Select>
-        <Input
-          label="Amount"
-          name="amount"
-          id="amount"
-          type="number"
-          value={amount / 100}
-          onChange={(e) => setAmount(Number(e.target.value) * 100)}
-        />
-        <SlidersForm
-          users={users}
-          amountToReach={amount}
-          amountsPerUser={amountsPerUser}
-          setAmountsPerUser={setAmountsPerUser}
-        />
-        <Button type="submit">Add</Button>
-      </form>
-    </div>
-  );
+  return { addPayment, amountsPerUser, amount, setAmount, setAmountsPerUser };
 };
-
-export default AddForm;
